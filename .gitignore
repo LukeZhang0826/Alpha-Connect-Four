@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Claude Code
+.claude/
+
+# Node
+web/node_modules/
+web/dist/
+web/.vercel/

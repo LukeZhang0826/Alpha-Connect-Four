@@ -1,0 +1,284 @@
+.explainer {
+  width: 100%;
+  max-width: 900px;
+  margin-top: 48px;
+  padding: 40px 24px 60px;
+  border-top: 2px solid #e5e7eb;
+  font-family: system-ui, sans-serif;
+  color: #1a1a1a;
+}
+
+.heading {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  margin: 0 0 12px;
+  letter-spacing: -0.5px;
+}
+
+.intro {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #444;
+  max-width: 680px;
+  margin: 0 0 36px;
+}
+
+.subheading {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 40px 0 20px;
+  color: #111;
+}
+
+/* ── Two-col layout ─────────────────────────────── */
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 640px) {
+  .twoCol { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.cardTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: #1a1a1a;
+}
+
+.cardText {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: #444;
+  margin: 0 0 16px;
+}
+
+.diagram {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Phase cards ─────────────────────────────────── */
+.phases {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 560px) {
+  .phases { grid-template-columns: 1fr; }
+}
+
+.phaseCard {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.phaseNumber {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phaseTitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.phaseText {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0 0 8px;
+}
+
+.formula {
+  display: block;
+  font-size: 0.78rem;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #334155;
+  font-family: "Fira Mono", "Consolas", monospace;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+/* ── Training flow ───────────────────────────────── */
+.trainingFlow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.trainStep {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  width: 160px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.trainIcon {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.trainLabel {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #111;
+}
+
+.trainText {
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: #555;
+}
+
+.trainArrow {
+  font-size: 1.4rem;
+  color: #94a3b8;
+  padding-top: 28px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 700px) {
+  .trainArrow { padding-top: 0; transform: rotate(90deg); }
+  .trainingFlow { flex-direction: column; align-items: center; }
+}
+
+/* ── Spec grid ───────────────────────────────────── */
+.specGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .specGrid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 400px) {
+  .specGrid { grid-template-columns: 1fr; }
+}
+
+.spec {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.specLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.specValue {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 3px;
+}
+
+.specNote {
+  font-size: 0.75rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* ── Hosting flow ────────────────────────────────── */
+.hostingFlow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.hostingStep {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  width: 155px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── Repo box ────────────────────────────────────── */
+.repoBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px 24px;
+  flex-wrap: wrap;
+}
+
+.repoTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #111;
+}
+
+.repoNote {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.repoLink {
+  display: inline-block;
+  padding: 10px 22px;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.repoLink:hover {
+  background: #333;
+}

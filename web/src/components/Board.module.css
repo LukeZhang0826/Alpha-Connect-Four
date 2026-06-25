@@ -1,0 +1,75 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 560px;
+}
+
+.colTargets {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  z-index: 10;
+}
+
+.colTarget {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  height: 100%;
+}
+
+.colTarget:disabled {
+  cursor: default;
+}
+
+.colTarget:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: clamp(4px, 1.2vw, 8px);
+  background: #1a56c4;
+  padding: clamp(8px, 2vw, 12px);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  aspect-ratio: 7 / 6;
+  width: 100%;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.piece {
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  transition: background 0.12s ease;
+}
+
+.empty {
+  background: #ffffff;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.player1 {
+  background: radial-gradient(circle at 35% 35%, #ffdd57, #e5a800);
+  box-shadow: 0 2px 6px rgba(229, 168, 0, 0.4);
+}
+
+.player2 {
+  background: radial-gradient(circle at 35% 35%, #ff5f5f, #c0392b);
+  box-shadow: 0 2px 6px rgba(192, 57, 43, 0.4);
+}
+
+.lastMove {
+  outline: 3px solid rgba(255, 255, 255, 0.75);
+  outline-offset: -3px;
+}
