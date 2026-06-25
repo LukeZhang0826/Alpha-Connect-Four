@@ -88,3 +88,51 @@
   opacity: 0.4;
   cursor: default;
 }
+
+.difficultyBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.diffLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.diffBtn {
+  padding: 6px 16px;
+  border: 2px solid #d0d0d0;
+  border-radius: 20px;
+  background: #f5f5f5;
+  color: #555;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.diffBtn:hover:not(:disabled) {
+  border-color: #1a56c4;
+  color: #1a56c4;
+}
+
+.diffBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.diffBtnActive {
+  border-color: #1a56c4;
+  background: #1a56c4;
+  color: #fff;
+}
+
+.diffBtnActive:hover:not(:disabled) {
+  background: #2163d8;
+  border-color: #2163d8;
+  color: #fff;
+}

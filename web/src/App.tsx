@@ -11,7 +11,7 @@ import {
   getValidMoves,
   isDraw,
 } from "./connectFour";
-import { initSession, getAiMove } from "./mcts";
+import { initSession, getAiMove, Difficulty } from "./mcts";
 import styles from "./App.module.css";
 
 type Status = "loading" | "error" | "player-turn" | "ai-thinking" | "win" | "draw";
@@ -23,6 +23,7 @@ export default function App() {
   const [status, setStatus] = useState<Status>("loading");
   const [lastMove, setLastMove] = useState<number | null>(null);
   const [winner, setWinner] = useState<"you" | "ai" | null>(null);
+  const [difficulty, setDifficulty] = useState<Difficulty>("medium");
   const sessionRef = useRef<InferenceSession | null>(null);
 
   useEffect(() => {
@@ -45,22 +46,22 @@ export default function App() {
   );
 
   const runAiMove = useCallback(
-    async (aiBoard: Board, currentBoard: Board) => {
+    async (aiBoard: Board, currentBoard: Board, aiPlayer: PlayerColor) => {
       setStatus("ai-thinking");
       // Yield to let React render the status before any blocking starts
       await new Promise((r) => setTimeout(r, 30));
       try {
-        const col = await getAiMove(sessionRef.current!, aiBoard);
-        const next = getNextState(currentBoard, col, -1 as PlayerColor);
+        const col = await getAiMove(sessionRef.current!, aiBoard, difficulty);
+        const next = getNextState(currentBoard, col, aiPlayer);
         setLastMove(col);
         setBoard(next);
-        if (!checkTerminal(next, col, -1)) setStatus("player-turn");
+        if (!checkTerminal(next, col, aiPlayer)) setStatus("player-turn");
       } catch (err) {
         console.error("AI move failed:", err);
         setStatus("error");
       }
     },
-    [checkTerminal]
+    [checkTerminal, difficulty]
   );
 
   const handleColumnClick = useCallback(
@@ -75,8 +76,9 @@ export default function App() {
 
       if (checkTerminal(next, col, humanPlayer)) return;
 
+      const aiPlayer = -humanPlayer as PlayerColor;
       const aiBoard = humanPlayer === 1 ? changePerspective(next) : next;
-      runAiMove(aiBoard, next);
+      runAiMove(aiBoard, next, aiPlayer);
     },
     [status, board, humanPlayer, checkTerminal, runAiMove]
   );
@@ -85,6 +87,7 @@ export default function App() {
     (humanGoesFirst: boolean) => {
       const newBoard = getInitialState();
       const human: PlayerColor = humanGoesFirst ? 1 : -1;
+      const aiPlayer = -human as PlayerColor;
       setBoard(newBoard);
       setHumanPlayer(human);
       setLastMove(null);
@@ -92,7 +95,7 @@ export default function App() {
       if (humanGoesFirst) {
         setStatus("player-turn");
       } else {
-        runAiMove(newBoard, newBoard);
+        runAiMove(newBoard, newBoard, aiPlayer);
       }
     },
     [runAiMove]
@@ -130,6 +133,20 @@ export default function App() {
         disabled={status !== "player-turn"}
         lastMove={lastMove}
       />
+
+      <div className={styles.difficultyBar}>
+        <span className={styles.diffLabel}>Difficulty:</span>
+        {(["easy", "medium", "hard"] as Difficulty[]).map((d) => (
+          <button
+            key={d}
+            className={[styles.diffBtn, difficulty === d ? styles.diffBtnActive : ""].join(" ")}
+            onClick={() => setDifficulty(d)}
+            disabled={status === "ai-thinking"}
+          >
+            {d.charAt(0).toUpperCase() + d.slice(1)}
+          </button>
+        ))}
+      </div>
 
       <div className={styles.controls}>
         <button

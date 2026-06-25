@@ -10,6 +10,8 @@
   inset: 0;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  padding: 0 clamp(8px, 2vw, 12px);
+  gap: clamp(4px, 1.2vw, 8px);
   z-index: 10;
 }
 
@@ -31,17 +33,18 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(6, 1fr);
   gap: clamp(4px, 1.2vw, 8px);
   background: #1a56c4;
   padding: clamp(8px, 2vw, 12px);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  aspect-ratio: 7 / 6;
   width: 100%;
 }
 
 .cell {
+  aspect-ratio: 1;
+  min-width: 0;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,7 +52,7 @@
 
 .piece {
   width: 90%;
-  height: 90%;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   transition: background 0.12s ease;
 }

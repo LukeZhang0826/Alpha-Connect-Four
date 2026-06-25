@@ -7,8 +7,20 @@ import {
   getEncodedState, getNextState, getValidMoves,
 } from "./connectFour";
 
+export type Difficulty = "easy" | "medium" | "hard";
+
+interface DifficultyConfig {
+  numSearches: number;
+  temperature: number; // 0 = greedy; >0 = sample ∝ visits^(1/T)
+}
+
+export const DIFFICULTY_CONFIG: Record<Difficulty, DifficultyConfig> = {
+  easy:   { numSearches: 30,  temperature: 2.0 },
+  medium: { numSearches: 200, temperature: 0   },
+  hard:   { numSearches: 800, temperature: 0   },
+};
+
 const C_PUCT = 2;
-const NUM_SEARCHES = 150;
 
 interface MctsNode {
   board: Board;
@@ -89,16 +101,34 @@ export async function initSession(): Promise<InferenceSession> {
   });
 }
 
+function pickMove(children: MctsNode[], temperature: number): number {
+  if (temperature === 0) {
+    let best = children[0];
+    for (const c of children) if (c.visitCount > best.visitCount) best = c;
+    return best.actionTaken!;
+  }
+  const weights = children.map((c) => Math.pow(c.visitCount, 1 / temperature));
+  const total = weights.reduce((a, b) => a + b, 0);
+  let r = Math.random() * total;
+  for (let i = 0; i < children.length; i++) {
+    r -= weights[i];
+    if (r <= 0) return children[i].actionTaken!;
+  }
+  return children[children.length - 1].actionTaken!;
+}
+
 export async function getAiMove(
   session: InferenceSession,
-  board: Board
+  board: Board,
+  difficulty: Difficulty = "hard"
 ): Promise<number> {
+  const { numSearches, temperature } = DIFFICULTY_CONFIG[difficulty];
   const root = makeNode(board, null, 0);
   root.visitCount = 1;
   const init = await runModel(session, board);
   expand(root, init.policy);
 
-  for (let i = 0; i < NUM_SEARCHES; i++) {
+  for (let i = 0; i < numSearches; i++) {
     const path: MctsNode[] = [root];
     let node = root;
     while (node.children.length > 0 && !node.terminal) {
@@ -116,9 +146,5 @@ export async function getAiMove(
     backpropagate(path, value);
   }
 
-  let bestCol = -1, bestVisits = -1;
-  for (const c of root.children) {
-    if (c.visitCount > bestVisits) { bestVisits = c.visitCount; bestCol = c.actionTaken!; }
-  }
-  return bestCol;
+  return pickMove(root.children, temperature);
 }
