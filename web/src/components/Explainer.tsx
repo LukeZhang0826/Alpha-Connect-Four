@@ -27,10 +27,10 @@ export function Explainer() {
         <div className={styles.card}>
           <h3 className={styles.cardTitle}>Monte Carlo Tree Search</h3>
           <p className={styles.cardText}>
-            Before playing, the AI runs <strong>150 simulated futures</strong>. Each simulation
-            walks down a game tree, expands new positions using the network's policy, and
-            backpropagates the value estimate back to the root. Moves are chosen by how
-            often they were visited.
+            Before playing, the AI runs <strong>30–800 simulated futures</strong> depending
+            on difficulty. Each simulation walks down a game tree, expands new positions using
+            the network's policy, and backpropagates the value estimate back to the root.
+            Moves are chosen by how often they were visited.
           </p>
           <MCTSDiagram />
         </div>
@@ -86,7 +86,7 @@ export function Explainer() {
         <Spec label="Policy head" value="7 logits → softmax" note="One probability per column" />
         <Spec label="Value head" value="Scalar via tanh" note="Expected outcome in [−1, 1]" />
         <Spec label="Training" value="3 iterations of self-play" note="Each iteration generates new games, then retrains" />
-        <Spec label="Search (inference)" value="150 MCTS simulations" note="Per move in the web demo" />
+        <Spec label="Search (inference)" value="30 / 200 / 800 simulations" note="Easy / Medium / Hard — selectable in the UI" />
       </div>
 
       {/* ── App architecture ── */}
@@ -187,7 +187,7 @@ function MCTSDiagram() {
   const nodeR = 16;
   // Tree layout: root, 3 children, 2 grandchildren under middle child
   const nodes = [
-    { id: "root", x: 140, y: 30, label: "root", color: "#3b82f6", visits: "N=150" },
+    { id: "root", x: 140, y: 30, label: "root", color: "#3b82f6", visits: "N=800" },
     { id: "c0", x: 60, y: 110, label: "col 0", color: "#94a3b8", visits: "N=12" },
     { id: "c3", x: 140, y: 110, label: "col 3", color: "#3b82f6", visits: "N=98" },
     { id: "c6", x: 220, y: 110, label: "col 6", color: "#94a3b8", visits: "N=40" },
